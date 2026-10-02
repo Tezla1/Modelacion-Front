@@ -1,0 +1,55 @@
+<main class="pagina">
+  <header class="cabecera">
+    <div>
+      <h1>Matrícula</h1>
+      <p class="sub">Elige tu grupo. Los cupos se actualizan en vivo, sin recargar.</p>
+    </div>
+    <label class="estudiante">
+      <span>Código de estudiante</span>
+      <input type="text" [(ngModel)]="codigoEstudiante" placeholder="EST-001" />
+    </label>
+  </header>
+
+  @if (mensaje) {
+    <p class="mensaje" [class.error]="esError" role="status">{{ mensaje }}</p>
+  }
+
+  @if (grupos().length === 0) {
+    <p class="vacio">Todavía no hay grupos creados. Crea uno desde Postman y recarga la página.</p>
+  } @else {
+    <section class="rejilla">
+      @for (grupo of grupos(); track grupo.id) {
+        <article class="tarjeta" [attr.data-nivel]="nivel(grupo)">
+          <div class="titulo">
+            <h2>{{ grupo.materia.nombre }}</h2>
+            <span class="codigo">{{ grupo.materia.codigo }}</span>
+          </div>
+
+          <p class="horario">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" />
+              <path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            {{ grupo.horario }}
+          </p>
+
+          <div class="cupos">
+            @for (v of [grupo.cuposDisponibles]; track v) {
+              <strong class="numero">{{ v }}</strong>
+            }
+            <span class="de">de {{ grupo.cuposTotales }} cupos libres</span>
+          </div>
+
+          <div class="medidor" role="progressbar" aria-label="Cupos libres"
+               [attr.aria-valuenow]="grupo.cuposDisponibles" aria-valuemin="0" [attr.aria-valuemax]="grupo.cuposTotales">
+            <div class="relleno" [style.width.%]="porcentaje(grupo)"></div>
+          </div>
+
+          <button type="button" (click)="inscribirme(grupo.id)" [disabled]="grupo.cuposDisponibles === 0">
+            {{ grupo.cuposDisponibles === 0 ? 'Sin cupos' : 'Inscribirme' }}
+          </button>
+        </article>
+      }
+    </section>
+  }
+</main>

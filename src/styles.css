@@ -1,0 +1,22 @@
+:root {
+  --tinta: #12332a;
+  --suave: #4f6358;
+  --verde: #1f7a4d;
+  --verde-claro: #9fd8b8;
+  --ambar: #b26a00;
+  --rojo: #b3372f;
+  --borde: #d5e0da;
+  --fondo: #eef3f0;
+  --fuente-titulo: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --fuente-texto: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
+  line-height: 1.5;
+}
